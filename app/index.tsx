@@ -1,5 +1,3 @@
-import { router } from "expo-router";
-import { useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -11,34 +9,18 @@ import {
   View,
 } from "react-native";
 
-import Colors from "@/constants/Colors";
+import colors from "@/constants/colors";
+import { useLogin } from "@/hooks/useLogin";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handleEmailChange = (text: string) => {
-    setEmail(text);
-  };
-
-  const handlePasswordChange = (text: string) => {
-    setPassword(text);
-  };
-
-  const handleLogin = () => {
-    if (password !== "1234") {
-      setError("Invalid password. Please try again.");
-      return;
-    }
-
-    setError("");
-
-    router.push({
-      pathname: "/(tabs)",
-      params: { email },
-    });
-  };
+  const {
+    email,
+    password,
+    error,
+    handleEmailChange,
+    handlePasswordChange,
+    handleLogin,
+  } = useLogin();
 
   return (
     <KeyboardAvoidingView
@@ -56,7 +38,7 @@ export default function LoginScreen() {
 
           <TextInput
             placeholder="Email"
-            placeholderTextColor={Colors.muted}
+            placeholderTextColor={colors.muted}
             keyboardType="email-address"
             autoCapitalize="none"
             value={email}
@@ -66,7 +48,7 @@ export default function LoginScreen() {
 
           <TextInput
             placeholder="Password"
-            placeholderTextColor={Colors.muted}
+            placeholderTextColor={colors.muted}
             value={password}
             onChangeText={handlePasswordChange}
             secureTextEntry
@@ -87,7 +69,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: colors.background,
   },
   container: {
     flexGrow: 1,
@@ -99,13 +81,13 @@ const styles = StyleSheet.create({
   card: {
     width: "100%",
     alignItems: "center",
-    backgroundColor: Colors.background,
+    backgroundColor: colors.background,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 24,
-    color: Colors.text,
+    color: colors.text,
   },
   input: {
     width: "80%",
@@ -114,12 +96,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginBottom: 16,
     borderRadius: 8,
-    backgroundColor: Colors.surface,
-    borderColor: Colors.border,
-    color: Colors.text,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    color: colors.text,
   },
   button: {
-    backgroundColor: Colors.tint,
+    backgroundColor: colors.tint,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -132,7 +114,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   errorText: {
-    color: Colors.danger,
+    color: colors.danger,
     marginTop: 10,
   },
 });

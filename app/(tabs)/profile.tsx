@@ -1,28 +1,59 @@
-import { StyleSheet } from 'react-native';
-
-import { Text, View } from '@/components/Themed';
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useLocalSearchParams } from "expo-router";
+import colors from "@/constants/colors";
 
 export default function ProfileScreen() {
+  const { email } = useLocalSearchParams<{ email: string }>();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
-    </View>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>
+            {email ? email.charAt(0).toUpperCase() : "?"}
+          </Text>
+        </View>
+        <Text style={styles.title}>Perfil</Text>
+        <Text style={styles.email}>{email || "Sin email"}</Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 24,
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: colors.tint,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 16,
+  },
+  avatarText: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#fff",
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontWeight: "bold",
+    color: colors.text,
+    marginBottom: 4,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  email: {
+    fontSize: 16,
+    color: colors.muted,
   },
 });

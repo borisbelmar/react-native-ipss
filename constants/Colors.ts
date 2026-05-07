@@ -1,4 +1,4 @@
-const Colors = {
+const colors = {
   text: "#0f172a",
   background: "#f8fafc",
   surface: "#ffffff",
@@ -11,4 +11,4 @@ const Colors = {
   tabIconSelected: "#2563eb",
 };
 
-export default Colors;
+export default colors;

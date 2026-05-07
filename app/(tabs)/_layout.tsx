@@ -4,9 +4,8 @@ import React from "react";
 import { Pressable } from "react-native";
 
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
-import Colors from "@/constants/Colors";
+import colors from "@/constants/colors";
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
@@ -18,34 +17,34 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.tabIconSelected,
-        tabBarInactiveTintColor: Colors.tabIconDefault,
+        tabBarActiveTintColor: colors.tabIconSelected,
+        tabBarInactiveTintColor: colors.tabIconDefault,
         tabBarStyle: {
-          backgroundColor: Colors.surface,
-          borderTopColor: Colors.border,
+          backgroundColor: colors.surface,
+          borderTopColor: colors.border,
         },
         headerStyle: {
-          backgroundColor: Colors.surface,
+          backgroundColor: colors.surface,
         },
-        headerTintColor: Colors.text,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
+        headerTintColor: colors.text,
         headerShown: useClientOnlyValue(false, true),
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Notas",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="sticky-note" color={color} />
+          ),
           headerRight: () => (
-            <Link href="/modal" asChild>
+            <Link href={`/(tabs)/nueva` as any} asChild>
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors.text}
+                    name="plus"
+                    size={22}
+                    color={colors.tint}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -57,8 +56,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: "Perfil",
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="[id]"
+        options={{
+          title: "Nota",
+          href: null,
+          headerShown: useClientOnlyValue(false, true),
         }}
       />
     </Tabs>
