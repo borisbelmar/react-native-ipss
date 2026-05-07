@@ -3,12 +3,12 @@ import { useState } from "react";
 import { z } from "zod";
 
 const loginSchema = z.object({
-  email: z.string().min(1, "El email es requerido").email("Email inválido"),
+  email: z.email("Email inválido").min(1, "El email es requerido"),
   password: z.string().min(1, "La contraseña es requerida"),
 });
 
 export function useLogin() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("pepe@example.com");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -25,7 +25,11 @@ export function useLogin() {
 
     if (!result.success) {
       const tree = z.treeifyError(result.error);
-      setError(tree.properties?.email?.errors?.[0] ?? tree.properties?.password?.errors?.[0] ?? "Datos inválidos");
+      setError(
+        tree.properties?.email?.errors?.[0] ??
+          tree.properties?.password?.errors?.[0] ??
+          "Datos inválidos",
+      );
       return;
     }
 
