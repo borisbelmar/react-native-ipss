@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCallback, useEffect, useState } from "react";
-import type { Note, CreateNoteInput, UpdateNoteInput } from "../types/note";
+import type { CreateNoteInput, Note, UpdateNoteInput } from "../types/note";
 
-const STORAGE_KEY = "notas";
+const STORAGE_KEY = "notes";
 
 export function useNotes() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -40,10 +40,11 @@ export function useNotes() {
     await persist([...notes, newNote]);
   };
 
-  const updateNote = async (id: string, input: UpdateNoteInput): Promise<void> => {
-    const updated = notes.map((n) =>
-      n.id === id ? { ...n, ...input } : n
-    );
+  const updateNote = async (
+    id: string,
+    input: UpdateNoteInput,
+  ): Promise<void> => {
+    const updated = notes.map((n) => (n.id === id ? { ...n, ...input } : n));
     await persist(updated);
   };
 
@@ -51,5 +52,13 @@ export function useNotes() {
     await persist(notes.filter((n) => n.id !== id));
   };
 
-  return { notes, loading, error, loadNotes, createNote, updateNote, deleteNote };
+  return {
+    notes,
+    loading,
+    error,
+    loadNotes,
+    createNote,
+    updateNote,
+    deleteNote,
+  };
 }
